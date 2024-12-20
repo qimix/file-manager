@@ -1,5 +1,6 @@
 package ru.netology.file_manager.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,9 +14,7 @@ import lombok.NoArgsConstructor;
 @Schema(description = "Ответ c токеном доступа")
 public class JwtAuthenticationResponse {
     @Schema(description = "Токен доступа", example = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYyMjUwNj...")
+    @JsonProperty("auth-token")
     private String token;
 
-/*    public JwtAuthenticationResponse(String jwt) {
-        this.token = jwt;
-    }*/
 }

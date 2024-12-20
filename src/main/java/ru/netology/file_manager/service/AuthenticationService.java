@@ -59,4 +59,14 @@ public class AuthenticationService {
         var jwt = jwtService.generateToken(user);
         return new JwtAuthenticationResponse(jwt);
     }
+
+    public JwtAuthenticationResponse login(SignInRequest request) {
+        var user = userService.getByUsername(request.getUsername());
+        if (user != null) {
+            var jwt = jwtService.generateToken(user);
+            return new JwtAuthenticationResponse(jwt);
+        }
+        throw new RuntimeException(request.getUsername());
+    }
+
 }

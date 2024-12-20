@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,11 +17,17 @@ import ru.netology.file_manager.dto.SignUpRequest;
 import ru.netology.file_manager.service.AuthenticationService;
 
 @RestController
-@RequestMapping("/auth")
 @RequiredArgsConstructor
 @Tag(name = "Аутентификация")
 public class AuthController {
     private final AuthenticationService authenticationService;
+    private final AuthenticationManager authenticationManager;
+
+    @Operation(summary = "Авторизация пользователя")
+    @PostMapping("/login")
+    public JwtAuthenticationResponse login(@RequestBody @Valid SignInRequest request) {
+        return authenticationService.login(request);
+    }
 
     @Operation(summary = "Регистрация пользователя")
     @PostMapping("/sign-up")
