@@ -1,7 +1,6 @@
 package ru.netology.file_manager.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,11 +13,6 @@ import ru.netology.file_manager.model.User;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-
-/*    @Autowired
-    public UserService(UserRepository repository) {
-        this.userRepository = repository;
-    }*/
 
     /**
      * Сохранение пользователя

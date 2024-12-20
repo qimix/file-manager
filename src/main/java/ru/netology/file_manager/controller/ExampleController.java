@@ -17,11 +17,6 @@ import ru.netology.file_manager.service.UserService;
 public class ExampleController {
     private final UserService service;
 
-/*    @Autowired
-    public ExampleController(UserService service) {
-        this.service = service;
-    }*/
-
     @GetMapping
     @Operation(summary = "Доступен только авторизованным пользователям")
     public String example() {

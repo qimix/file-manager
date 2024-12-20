@@ -21,11 +21,6 @@ import ru.netology.file_manager.service.AuthenticationService;
 public class AuthController {
     private final AuthenticationService authenticationService;
 
-/*    @Autowired
-    public AuthController(AuthenticationService authenticationService) {
-        this.authenticationService = authenticationService;
-    }*/
-
     @Operation(summary = "Регистрация пользователя")
     @PostMapping("/sign-up")
     public JwtAuthenticationResponse signUp(@RequestBody @Valid SignUpRequest request) {
