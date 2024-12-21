@@ -6,6 +6,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.netology.file_manager.dto.JwtAuthenticationResponse;
+import ru.netology.file_manager.dto.SignInFrontendRequest;
 import ru.netology.file_manager.dto.SignInRequest;
 import ru.netology.file_manager.dto.SignUpRequest;
 import ru.netology.file_manager.model.Role;
@@ -60,13 +61,13 @@ public class AuthenticationService {
         return new JwtAuthenticationResponse(jwt);
     }
 
-    public JwtAuthenticationResponse login(SignInRequest request) {
-        var user = userService.getByUsername(request.getUsername());
+    public JwtAuthenticationResponse login(SignInFrontendRequest frontendRequest) {
+        var user = userService.getByEmail(frontendRequest.getEmail());
         if (user != null) {
             var jwt = jwtService.generateToken(user);
             return new JwtAuthenticationResponse(jwt);
         }
-        throw new RuntimeException(request.getUsername());
+        throw new RuntimeException(frontendRequest.getEmail());
     }
 
 }

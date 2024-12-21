@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.netology.file_manager.dto.JwtAuthenticationResponse;
+import ru.netology.file_manager.dto.SignInFrontendRequest;
 import ru.netology.file_manager.dto.SignInRequest;
 import ru.netology.file_manager.dto.SignUpRequest;
 import ru.netology.file_manager.service.AuthenticationService;
@@ -22,8 +23,8 @@ public class AuthController {
 
     @Operation(summary = "Авторизация пользователя")
     @PostMapping("/login")
-    public JwtAuthenticationResponse login(@RequestBody @Valid SignInRequest request) {
-        return authenticationService.login(request);
+    public JwtAuthenticationResponse login(@RequestBody @Valid SignInFrontendRequest frontendRequest) {
+        return authenticationService.login(frontendRequest);
     }
 
     @Operation(summary = "Регистрация пользователя")
