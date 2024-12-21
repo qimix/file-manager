@@ -28,7 +28,8 @@ public class FileController {
 
     @CrossOrigin
     @GetMapping("/list")
-    public List<FileInfo> filelist(@RequestParam("limit") int limit) {
-        return fileService.filelist();
+    public ResponseEntity<List<FileInfo>> filelist(@RequestParam("limit") Integer limit) {
+        var fileInfoList = fileService.filelist().stream().limit(limit).toList();
+        return ResponseEntity.ok().body(fileInfoList);
     }
 }
