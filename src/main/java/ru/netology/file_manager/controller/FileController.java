@@ -31,11 +31,12 @@ public class FileController {
     @CrossOrigin
     @GetMapping("/list")
     public ResponseEntity<List<FileListResp>> filelist(@RequestParam("limit") Integer limit) {
-        var fileInfoList = fileService.filelist().stream().limit(limit).toList();
-        //FileInfo fileInfo = FileInfo.builder().setName(fileInfoList.get(0).getName()).build();
-        FileListResp fileListResp = FileListResp.builder().setFilename(fileInfoList.get(0).getName()).build();
-        List<FileListResp> list = new ArrayList<FileListResp>();
-        list.add(fileListResp);
-        return ResponseEntity.ok(list);
+        List<FileInfo> fileInfoList = fileService.filelist().stream().limit(limit).toList();
+        List<FileListResp> fileListResp = new ArrayList<>();
+        for (FileInfo fileInfo : fileInfoList) {
+            fileListResp.add(new FileListResp().builder().setFilename(fileInfo.getName()).build());
+        }
+        return ResponseEntity.ok(fileListResp);
     }
+
 }
