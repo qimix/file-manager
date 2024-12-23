@@ -71,4 +71,23 @@ public class FileInfo {
 
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Long getSize() {
+        return size;
+    }
+
+    public String getKeyFile() {
+        return keyFile;
+    }
+
+    public LocalDate getUploadDate() {
+        return uploadDate;
+    }
 }
