@@ -2,13 +2,17 @@ spring:
   application:
     name: file-manager
   datasource:
-    url: jdbc:h2:mem:security-security
+    url: jdbc:h2:mem:db1
     driverClassName: org.h2.Driver
     username: root
     password: root
   jpa:
     hibernate:
       ddl-auto: create-drop
+    defer-datasource-initialization: true
+    sql:
+      init:
+        mode: always
     show-sql: true
     properties:
       hibernate:
