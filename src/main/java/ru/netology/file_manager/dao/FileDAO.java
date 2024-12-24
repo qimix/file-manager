@@ -22,4 +22,11 @@ public class FileDAO {
         return (List<FileInfo>) fileInfoRepository.findAll();
     }
 
+    public void delete(Long id) {
+        fileInfoRepository.deleteById(id);
+    }
+
+    public FileInfo findByName(String filename) {
+        return fileInfoRepository.findByName(filename);
+    }
 }

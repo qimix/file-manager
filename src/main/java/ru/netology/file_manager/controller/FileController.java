@@ -28,7 +28,6 @@ public class FileController {
             fileService.upload(file);
             return ResponseEntity.ok("Upload file to server");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             throw new IllegalArgumentException("Error input data");
         }
     }
@@ -42,6 +41,17 @@ public class FileController {
             fileListResp.add(new FileListResp().builder().setFilename(fileInfo.getName()).build());
         }
         return ResponseEntity.ok(fileListResp);
+    }
+
+    @CrossOrigin
+    @DeleteMapping("/file")
+    public ResponseEntity<String> delete(@RequestParam("filename") String filename) throws IOException {
+        try {
+            fileService.delete(filename);
+            return ResponseEntity.ok("Success deleted");
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Error input data");
+        }
     }
 
 }

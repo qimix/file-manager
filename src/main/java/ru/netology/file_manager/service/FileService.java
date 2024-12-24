@@ -11,4 +11,5 @@ public interface FileService {
 
     List<FileInfo> filelist();
 
+    void delete(String filename) throws IOException;
 }

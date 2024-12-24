@@ -48,6 +48,14 @@ public class FileServiceImpl implements FileService {
         return fileDAO.filelist();
     }
 
+    @Override
+    public void delete(String filename) throws IOException {
+        FileInfo file = fileDAO.findByName(filename);
+        fileDAO.delete(file.getId());
+        System.out.println(file.getKeyFile());
+        fileManager.delete(file.getKeyFile());
+    }
+
     private String generateKey(String name) {
         return DigestUtils.md5Hex(name + LocalDateTime.now().toString());
     }

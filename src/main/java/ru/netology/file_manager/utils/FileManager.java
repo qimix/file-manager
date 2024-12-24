@@ -23,4 +23,10 @@ public class FileManager {
             stream.close();
         }
     }
+
+    public void delete(String key) throws IOException {
+        Path path = Paths.get(DIRECTORY_PATH, key);
+        Files.delete(path);
+    }
+
 }
