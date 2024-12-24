@@ -1,7 +1,8 @@
 package ru.netology.file_manager.controller;
 
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,15 +17,19 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 public class FileController {
+    private static final Logger logger = LoggerFactory.getLogger(FileController.class);
     private final FileService fileService;
 
     @CrossOrigin
     @PostMapping("/file")
-    public ResponseEntity<FileInfo> upload(@RequestParam MultipartFile attachment) {
+    public ResponseEntity<String> upload(@RequestParam("filename") String filename, @RequestBody MultipartFile file) throws IOException {
+        logger.debug("Request body: " + file);
         try {
-            return new ResponseEntity<>(fileService.upload(attachment), HttpStatus.CREATED);
-        } catch (IOException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            fileService.upload(file);
+            return ResponseEntity.ok("Upload file to server");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new IllegalArgumentException("Error input data");
         }
     }
 
