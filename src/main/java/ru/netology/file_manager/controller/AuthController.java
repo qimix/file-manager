@@ -2,6 +2,7 @@ package ru.netology.file_manager.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,12 +15,16 @@ import ru.netology.file_manager.dto.JwtAuthenticationResponse;
 import ru.netology.file_manager.dto.SignInFrontendRequest;
 import ru.netology.file_manager.dto.SignInRequest;
 import ru.netology.file_manager.dto.SignUpRequest;
+import ru.netology.file_manager.repository.TokenRepository;
 import ru.netology.file_manager.service.AuthenticationService;
+import ru.netology.file_manager.service.JwtService;
 
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "Аутентификация")
 public class AuthController {
+    private final TokenRepository tokenRepository;
+    private final JwtService jwtService;
     private final AuthenticationService authenticationService;
     private final AuthenticationManager authenticationManager;
 
@@ -31,7 +36,8 @@ public class AuthController {
 
     @Operation(summary = "User logout")
     @PostMapping("/logout")
-    public ResponseEntity<String> login() {
+    public ResponseEntity<String> logout(HttpServletRequest httpServletRequest) {
+        jwtService.dropToken(httpServletRequest.getHeader("auth-token"));
         return new ResponseEntity<String>("Logout user", HttpStatus.OK);
     }
 

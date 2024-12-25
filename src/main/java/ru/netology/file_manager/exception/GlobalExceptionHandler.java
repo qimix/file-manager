@@ -43,19 +43,19 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }*/
 
-    @ExceptionHandler(NullPointerException.class)
+/*    @ExceptionHandler(NullPointerException.class)
     public ResponseEntity<String> nullPointerException(NullPointerException nullPointerException) {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR) //500
                 .body("Error upload file");
-    }
+    }*/
 
-    @ExceptionHandler(IOException.class)
+/*    @ExceptionHandler(IOException.class)
     public ResponseEntity<String> ioException(IOException ioException) {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("Error upload file");
-    }
+    }*/
 
     @ExceptionHandler(IncorrectResultSizeDataAccessException.class)
     public ResponseEntity<String> incorrectResultSizeDataAccessException(IncorrectResultSizeDataAccessException ex) {
