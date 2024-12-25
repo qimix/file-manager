@@ -35,34 +35,25 @@ public class GlobalExceptionHandler {
                 .body("Error input data");
     }
 
-/*    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<String> handleAllExceptions(IllegalArgumentException ex, WebRequest request) {
-        String logMessage = String.format("Exception: %s, message: %s, request: %s",
-                ex.getClass().getName(), ex.getMessage(), request.getDescription(false));
-
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
-    }*/
-
-/*    @ExceptionHandler(NullPointerException.class)
+    @ExceptionHandler(NullPointerException.class)
     public ResponseEntity<String> nullPointerException(NullPointerException nullPointerException) {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR) //500
                 .body("Error upload file");
-    }*/
+    }
 
-/*    @ExceptionHandler(IOException.class)
+    @ExceptionHandler(IOException.class)
     public ResponseEntity<String> ioException(IOException ioException) {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("Error upload file");
-    }*/
+    }
 
     @ExceptionHandler(IncorrectResultSizeDataAccessException.class)
     public ResponseEntity<String> incorrectResultSizeDataAccessException(IncorrectResultSizeDataAccessException ex) {
         return ResponseEntity
-                .status(HttpStatus.CONFLICT)
-                .body("Query did not return a unique result: 2 results were returned");
+                .status(HttpStatus.CONFLICT) //409
+                .body("Query did not return a unique result");
     }
-
 
 }
