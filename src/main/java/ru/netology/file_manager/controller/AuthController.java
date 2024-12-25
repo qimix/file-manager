@@ -47,9 +47,4 @@ public class AuthController {
         return authenticationService.signUp(request);
     }
 
-    @Operation(summary = "Авторизация пользователя")
-    @PostMapping("/sign-in")
-    public JwtAuthenticationResponse signIn(@RequestBody @Valid SignInRequest request) {
-        return authenticationService.signIn(request);
-    }
 }
