@@ -27,6 +27,6 @@ public class FileDAO {
     }
 
     public FileInfo findByName(String filename) {
-        return fileInfoRepository.findByName(filename);
+        return fileInfoRepository.findByName(filename).get(0);
     }
 }

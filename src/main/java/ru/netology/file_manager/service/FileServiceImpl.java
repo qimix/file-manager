@@ -52,7 +52,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public void delete(String filename) throws IOException {
-        FileInfo file = fileDAO.findByName(filename);
+        FileInfo file = findByName(filename);
         fileDAO.delete(file.getId());
         fileManager.delete(file.getKeyFile());
     }
