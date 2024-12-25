@@ -26,7 +26,6 @@ public class FileController {
     @CrossOrigin
     @PostMapping("/file")
     public ResponseEntity<String> upload(@RequestParam("filename") String filename, @RequestBody MultipartFile file) throws IOException {
-        logger.debug("Request body: " + file);
         try {
             fileService.upload(file);
             return ResponseEntity.ok("Upload file to server");
