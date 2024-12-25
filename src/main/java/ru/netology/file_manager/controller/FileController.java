@@ -1,8 +1,11 @@
 package ru.netology.file_manager.controller;
 
+
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -51,6 +54,19 @@ public class FileController {
             return ResponseEntity.ok("Success deleted");
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Error input data");
+        }
+    }
+
+    @CrossOrigin
+    @GetMapping(path = "/file")
+    public ResponseEntity<Resource> download(@RequestParam("filename") String filename) {
+        try {
+            FileInfo foundFile = fileService.findByName(filename);
+            Resource resource = fileService.download(foundFile.getKeyFile());
+            return ResponseEntity.ok()
+                    .body(resource);
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 

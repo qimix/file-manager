@@ -1,5 +1,8 @@
 package ru.netology.file_manager.utils;
 
+
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Component;
 
 import java.io.FileOutputStream;
@@ -27,6 +30,16 @@ public class FileManager {
     public void delete(String key) throws IOException {
         Path path = Paths.get(DIRECTORY_PATH, key);
         Files.delete(path);
+    }
+
+    public Resource download(String key) throws IOException {
+        Path path = Paths.get(DIRECTORY_PATH, key);
+        Resource resource = new UrlResource(path.toUri());
+        if (resource.exists() || resource.isReadable()) {
+            return resource;
+        } else {
+            throw new IOException();
+        }
     }
 
 }

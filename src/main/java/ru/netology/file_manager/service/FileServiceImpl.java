@@ -1,10 +1,12 @@
 package ru.netology.file_manager.service;
 
+
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.netology.file_manager.dao.FileDAO;
@@ -52,8 +54,17 @@ public class FileServiceImpl implements FileService {
     public void delete(String filename) throws IOException {
         FileInfo file = fileDAO.findByName(filename);
         fileDAO.delete(file.getId());
-        System.out.println(file.getKeyFile());
         fileManager.delete(file.getKeyFile());
+    }
+
+    @Override
+    public FileInfo findByName(String filename) {
+        return fileDAO.findByName(filename);
+    }
+
+    @Override
+    public Resource download(String keyFile) throws IOException {
+        return fileManager.download(keyFile);
     }
 
     private String generateKey(String name) {

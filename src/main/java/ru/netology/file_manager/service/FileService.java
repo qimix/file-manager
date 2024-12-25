@@ -1,5 +1,7 @@
 package ru.netology.file_manager.service;
 
+
+import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 import ru.netology.file_manager.model.FileInfo;
 
@@ -12,4 +14,8 @@ public interface FileService {
     List<FileInfo> filelist();
 
     void delete(String filename) throws IOException;
+
+    FileInfo findByName(String filename);
+
+    Resource download(String keyFile) throws IOException;
 }
