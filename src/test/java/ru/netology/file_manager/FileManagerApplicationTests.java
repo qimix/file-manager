@@ -14,32 +14,27 @@ import java.time.LocalDate;
 
 @SpringBootTest
 class FileManagerApplicationTests {
+    private static MultipartFile multipartFile;
+    private static FileManager manager;
+    private static FileInfo file;
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
-	public class FileManagerTest {
 
-		private static MultipartFile multipartFile;
-
-		private static FileManager manager;
-
-		private static FileInfo file;
-
-		@BeforeClass
-		public static void prepareTestData() throws IOException {
-			file = FileInfo.builder()
-					.setId(9L)
-					.setName("mockFile.txt")
-					.setKeyFile("mockFile.txt")
-					.setSize(38975L)
-					.setLocalDate(LocalDate.now())
-					.build();
-			multipartFile = new MockMultipartFile("mockFile", "mockFile.txt", "txt",
-					new FileInputStream("src/test/resources/mockFile.txt"));
-			manager = new FileManager();
-		}
-	}
+    @BeforeClass
+    public static void prepareTestData() throws IOException {
+        file = FileInfo.builder()
+                .setId(9L)
+                .setName("mockFile.txt")
+                .setKeyFile("mockFile.txt")
+                .setSize(38975L)
+                .setLocalDate(LocalDate.now())
+                .build();
+        multipartFile = new MockMultipartFile("mockFile", "mockFile.txt", "txt",
+                new FileInputStream("src/test/resources/mockFile.txt"));
+        manager = new FileManager();
+    }
 
 }
