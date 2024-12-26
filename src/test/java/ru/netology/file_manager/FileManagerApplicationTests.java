@@ -1,16 +1,25 @@
 package ru.netology.file_manager;
 
+
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
+
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.multipart.MultipartFile;
 import ru.netology.file_manager.model.FileInfo;
 import ru.netology.file_manager.utils.FileManager;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class FileManagerApplicationTests {
@@ -34,6 +43,19 @@ class FileManagerApplicationTests {
 
     @Test
     void contextLoads() {
+    }
+
+    @Test
+    public void uploadTest() throws IOException {
+        ReflectionTestUtils.setField(manager, "DIRECTORY_PATH", "src/test/resources/testFileStorage/");
+
+        manager.upload(multipartFile.getBytes(), "mockFile.txt");
+
+        Path checkFile = Paths.get("src/test/resources/testFileStorage/mockFile.txt");
+        assertThat(Files.exists(checkFile)).isTrue();
+        assertThat(Files.isRegularFile(checkFile)).isTrue();
+        assertThat(Files.size(checkFile)).isEqualTo(multipartFile.getSize());
+        Files.delete(checkFile);
     }
 
 

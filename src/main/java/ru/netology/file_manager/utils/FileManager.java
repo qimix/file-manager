@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 
 @Component
 public class FileManager {
-    private final String DIRECTORY_PATH = ".";
+    private String DIRECTORY_PATH = ".";
 
     public void upload(byte[] resource, String keyName) throws IOException {
         Path path = Paths.get(DIRECTORY_PATH, keyName);
