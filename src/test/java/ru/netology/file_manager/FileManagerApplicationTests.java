@@ -1,6 +1,6 @@
 package ru.netology.file_manager;
 
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
@@ -18,13 +18,8 @@ class FileManagerApplicationTests {
     private static FileManager manager;
     private static FileInfo file;
 
-    @Test
-    void contextLoads() {
-    }
-
-
-    @BeforeClass
-    public static void prepareTestData() throws IOException {
+    @BeforeAll
+    public static void initData() throws IOException {
         file = FileInfo.builder()
                 .setId(9L)
                 .setName("mockFile.txt")
@@ -36,5 +31,13 @@ class FileManagerApplicationTests {
                 new FileInputStream("src/test/resources/mockFile.txt"));
         manager = new FileManager();
     }
+
+    @Test
+    void contextLoads() {
+    }
+
+
+
+
 
 }
