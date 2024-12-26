@@ -1,7 +1,6 @@
 package ru.netology.file_manager;
 
 
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -49,7 +48,6 @@ class FileManagerApplicationTests {
     @Test
     public void uploadTest() throws IOException {
         ReflectionTestUtils.setField(manager, "DIRECTORY_PATH", "src/test/resources/testFileStorage/");
-
         manager.upload(multipartFile.getBytes(), "mockFile.txt");
 
         Path checkFile = Paths.get("src/test/resources/testFileStorage/mockFile.txt");
@@ -62,7 +60,6 @@ class FileManagerApplicationTests {
     @Test
     public void downloadTest() throws IOException {
         ReflectionTestUtils.setField(manager, "DIRECTORY_PATH", "src/test/resources/");
-
         Resource resource = manager.download(file.getKeyFile());
 
         assertThat(resource.isFile()).isTrue();
@@ -70,7 +67,16 @@ class FileManagerApplicationTests {
         assertThat(resource.exists()).isTrue();
     }
 
+    @Test
+    public void deleteTest() throws IOException {
+        Path checkFile = Paths.get("src/test/resources/testFileStorage/mockFile.txt");
+        Files.createFile(checkFile);
+        assertThat(Files.exists(checkFile)).isTrue();
+        assertThat(Files.isRegularFile(checkFile)).isTrue();
+        ReflectionTestUtils.setField(manager, "DIRECTORY_PATH", "src/test/resources/testFileStorage/");
 
-
+        manager.delete(file.getKeyFile());
+        assertThat(Files.notExists(checkFile)).isTrue();
+    }
 
 }
