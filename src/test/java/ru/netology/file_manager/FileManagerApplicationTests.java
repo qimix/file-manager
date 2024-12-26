@@ -5,6 +5,7 @@ package ru.netology.file_manager;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.Resource;
 import org.springframework.mock.web.MockMultipartFile;
 
 import org.springframework.test.util.ReflectionTestUtils;
@@ -58,6 +59,16 @@ class FileManagerApplicationTests {
         Files.delete(checkFile);
     }
 
+    @Test
+    public void downloadTest() throws IOException {
+        ReflectionTestUtils.setField(manager, "DIRECTORY_PATH", "src/test/resources/");
+
+        Resource resource = manager.download(file.getKeyFile());
+
+        assertThat(resource.isFile()).isTrue();
+        assertThat(resource.getFilename()).isEqualTo(file.getName());
+        assertThat(resource.exists()).isTrue();
+    }
 
 
 
