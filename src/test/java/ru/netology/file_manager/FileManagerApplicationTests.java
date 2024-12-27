@@ -2,6 +2,7 @@ package ru.netology.file_manager;
 
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.Resource;
@@ -46,6 +47,7 @@ class FileManagerApplicationTests {
     }
 
     @Test
+    @DisplayName("JUnit test for FileManager.upload")
     public void uploadTest() throws IOException {
         ReflectionTestUtils.setField(manager, "DIRECTORY_PATH", "src/test/resources/testFileStorage/");
         manager.upload(multipartFile.getBytes(), "mockFile.txt");
@@ -58,6 +60,7 @@ class FileManagerApplicationTests {
     }
 
     @Test
+    @DisplayName("JUnit test for FileManager.download")
     public void downloadTest() throws IOException {
         ReflectionTestUtils.setField(manager, "DIRECTORY_PATH", "src/test/resources/");
         Resource resource = manager.download(file.getKeyFile());
@@ -68,6 +71,7 @@ class FileManagerApplicationTests {
     }
 
     @Test
+    @DisplayName("JUnit test for FileManager.delete")
     public void deleteTest() throws IOException {
         Path checkFile = Paths.get("src/test/resources/testFileStorage/mockFile.txt");
         Files.createFile(checkFile);
