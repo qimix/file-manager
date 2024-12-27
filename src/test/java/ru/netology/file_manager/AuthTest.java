@@ -1,21 +1,16 @@
 package ru.netology.file_manager;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.util.ReflectionTestUtils;
 import ru.netology.file_manager.controller.AuthController;
 import ru.netology.file_manager.dto.JwtAuthenticationResponse;
 import ru.netology.file_manager.dto.SignInFrontendRequest;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.mock;
 
 @SpringBootTest
