@@ -21,14 +21,14 @@ import ru.netology.file_manager.service.JwtService;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "Аутентификация")
+@Tag(name = "Authorization")
 public class AuthController {
     private final TokenRepository tokenRepository;
     private final JwtService jwtService;
     private final AuthenticationService authenticationService;
     private final AuthenticationManager authenticationManager;
 
-    @Operation(summary = "Авторизация пользователя")
+    @Operation(summary = "User authorization")
     @PostMapping("/login")
     public JwtAuthenticationResponse login(@RequestBody @Valid SignInFrontendRequest frontendRequest) {
         return authenticationService.login(frontendRequest);
@@ -41,7 +41,7 @@ public class AuthController {
         return new ResponseEntity<String>("Logout user", HttpStatus.OK);
     }
 
-    @Operation(summary = "Регистрация пользователя")
+    @Operation(summary = "User registration")
     @PostMapping("/sign-up")
     public JwtAuthenticationResponse signUp(@RequestBody @Valid SignUpRequest request) {
         return authenticationService.signUp(request);
