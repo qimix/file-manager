@@ -44,6 +44,9 @@ class FileManagerApplicationTests {
 
     @Test
     void contextLoads() {
+        assertThat(multipartFile).isNotNull();
+        assertThat(manager).isNotNull();
+        assertThat(file).isNotNull();
     }
 
     @Test
