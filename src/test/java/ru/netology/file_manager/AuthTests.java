@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
 @SpringBootTest
-public class AuthTest {
+public class AuthTests {
     private SignInFrontendRequest frontendRequest;
     @Autowired
     private AuthController authController;
@@ -32,6 +32,5 @@ public class AuthTest {
         JwtAuthenticationResponse authenticationResponse = authController.login(frontendRequest);
         assertThat(authenticationResponse).isNotNull();
     }
-
 
 }

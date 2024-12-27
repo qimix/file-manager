@@ -21,7 +21,7 @@ import java.util.List;
 
 @DataJpaTest
 @Transactional
-class RepositoryTest {
+class RepositoryTests {
     private FileInfo fileInfo;
     private User user;
     private Token token;
