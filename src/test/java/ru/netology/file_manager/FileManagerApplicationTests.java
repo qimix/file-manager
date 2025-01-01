@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.netology.file_manager.model.FileInfo;
 import ru.netology.file_manager.utils.FileManager;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -40,6 +41,10 @@ class FileManagerApplicationTests {
         multipartFile = new MockMultipartFile("mockFile", "mockFile.txt", "txt",
                 new FileInputStream("src/test/resources/mockFile.txt"));
         manager = new FileManager();
+        File dir = new File("src/test/resources/testFileStorage");
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
     }
 
     @Test
