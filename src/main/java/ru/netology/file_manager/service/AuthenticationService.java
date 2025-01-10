@@ -63,7 +63,7 @@ public class AuthenticationService {
 
     public JwtAuthenticationResponse login(SignInFrontendRequest frontendRequest) {
         var user = userService.getByEmail(frontendRequest.getEmail());
-        if (user != null) {
+        if (passwordEncoder.matches(frontendRequest.getPassword(), user.getPassword())) {
             var jwt = jwtService.generateToken(user);
             System.out.println(jwt);
             return new JwtAuthenticationResponse(jwt);

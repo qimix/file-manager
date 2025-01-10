@@ -38,7 +38,7 @@ public class AuthTests {
 
         frontendRequest = mock(SignInFrontendRequest.class);
         Mockito.when(frontendRequest.getEmail()).thenReturn("user@gmail.com");
-        Mockito.when(frontendRequest.getPassword()).thenReturn("$2a$08$qvrzQZ7jJ7oy2p/msL4M0.l83Cd0jNsX6AJUitbgRXGzge4j035ha");
+        Mockito.when(frontendRequest.getPassword()).thenReturn("admin1234");
 
         token = Token.builder()
                 .setToken("eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsImlkIjoxLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInN1YiI6ImFkbWluIiwiaWF0IjoxNzM1MTIzNDcyLCJleHAiOjE3MzUyNjc0NzJ9.Gums_M7BEL_QJxwEvqibId7sj6eXah49SSqeGe8Ju98")
