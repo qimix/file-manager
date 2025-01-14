@@ -22,33 +22,16 @@ public class GlobalExceptionHandler {
                 .body("Bad credentials");
     }
 
-
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<String> illegalArgumentException(IllegalArgumentException illegalArgumentException) {
+    @ExceptionHandler(UploadFileException.class)
+    public ResponseEntity<String> uploadFileException(UploadFileException uploadFileException) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST) // 400
                 .body("Error input data");
     }
 
-    @ExceptionHandler(NullPointerException.class)
-    public ResponseEntity<String> nullPointerException(NullPointerException nullPointerException) {
-        return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR) //500
-                .body("Error upload file");
-    }
 
-    @ExceptionHandler(IOException.class)
-    public ResponseEntity<String> ioException(IOException ioException) {
-        return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Error upload file");
-    }
 
-    @ExceptionHandler(IncorrectResultSizeDataAccessException.class)
-    public ResponseEntity<String> incorrectResultSizeDataAccessException(IncorrectResultSizeDataAccessException ex) {
-        return ResponseEntity
-                .status(HttpStatus.CONFLICT) //409
-                .body("Query did not return a unique result");
-    }
+
+
 
 }

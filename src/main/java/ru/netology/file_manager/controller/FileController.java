@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.netology.file_manager.dto.FileListResp;
+import ru.netology.file_manager.exception.UploadFileException;
 import ru.netology.file_manager.model.FileInfo;
 import ru.netology.file_manager.service.FileService;
 
@@ -25,12 +26,12 @@ public class FileController {
 
     @CrossOrigin
     @PostMapping("/file")
-    public ResponseEntity<String> upload(@RequestParam("filename") String filename, @RequestBody MultipartFile file) throws IOException {
+    public ResponseEntity<String> upload(@RequestParam("filename") String filename, @RequestBody MultipartFile file) throws Exception {
         try {
             fileService.upload(file);
             return ResponseEntity.ok("Upload file to server");
         } catch (Exception e) {
-            throw new IllegalArgumentException("Error input data");
+            throw new UploadFileException(e);
         }
     }
 
