@@ -3,6 +3,7 @@ package ru.netology.file_manager.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.netology.file_manager.dto.JwtAuthenticationResponse;
@@ -65,10 +66,9 @@ public class AuthenticationService {
         var user = userService.getByEmail(frontendRequest.getEmail());
         if (passwordEncoder.matches(frontendRequest.getPassword(), user.getPassword())) {
             var jwt = jwtService.generateToken(user);
-            System.out.println(jwt);
             return new JwtAuthenticationResponse(jwt);
         }
-        throw new RuntimeException(frontendRequest.getEmail());
+        throw new UsernameNotFoundException("Bad credentials");
     }
 
 }

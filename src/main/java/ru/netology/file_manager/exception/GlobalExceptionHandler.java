@@ -5,6 +5,7 @@ import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
@@ -14,19 +15,13 @@ import java.io.IOException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<String> badCredentialsException(BadCredentialsException badCredentialsException) {
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<String> usernameNotFoundException(UsernameNotFoundException usernameNotFoundException) {
         return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST) //400
+                .status(HttpStatus.UNAUTHORIZED) //400
                 .body("Bad credentials");
     }
 
-    @ExceptionHandler(HttpClientErrorException.class)
-    public ResponseEntity<String> httpClientErrorException(HttpClientErrorException httpClientErrorException) {
-        return ResponseEntity
-                .status(HttpStatus.UNAUTHORIZED) //401
-                .body("Unauthorized error");
-    }
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> illegalArgumentException(IllegalArgumentException illegalArgumentException) {
