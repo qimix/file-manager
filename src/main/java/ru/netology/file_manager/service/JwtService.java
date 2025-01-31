@@ -1,20 +1,20 @@
 package ru.netology.file_manager.service;
 
+import ch.qos.logback.classic.Logger;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import ru.netology.file_manager.exception.ExtractClaimsException;
 import ru.netology.file_manager.model.Token;
 import ru.netology.file_manager.model.User;
-import ru.netology.file_manager.repository.FileInfoRepository;
 import ru.netology.file_manager.repository.TokenRepository;
 
 import java.security.Key;
@@ -26,6 +26,7 @@ import java.util.function.Function;
 @Service
 @RequiredArgsConstructor
 public class JwtService {
+    public static final Logger logger = (Logger) LoggerFactory.getLogger(JwtService.class);
     @Value("${token.signing.key}")
     private String jwtSigningKey;
 
@@ -127,8 +128,16 @@ public class JwtService {
      * @return данные
      */
     private Claims extractAllClaims(String token) {
-        return Jwts.parser().setSigningKey(getSigningKey()).build().parseClaimsJws(token)
-                .getBody();
+        Claims claims;
+        logger.info("------------------- Start extractAllClaims -----------------------");
+        try {
+            claims = Jwts.parser().setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody();
+            logger.info("------------------- All claims extract -----------------------");
+        } catch (Exception e) {
+            logger.info("------------------- Error claims extract -----------------------");
+            claims = null;
+        }
+        return claims;
     }
 
     /**

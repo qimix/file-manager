@@ -1,6 +1,8 @@
 package ru.netology.file_manager.service;
 
+import ch.qos.logback.classic.Logger;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,6 +14,7 @@ import ru.netology.file_manager.dto.SignInRequest;
 import ru.netology.file_manager.dto.SignUpRequest;
 import ru.netology.file_manager.model.Role;
 import ru.netology.file_manager.model.User;
+import ru.netology.file_manager.utils.FileManager;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +23,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-
+    public static final Logger logger = (Logger) LoggerFactory.getLogger(AuthenticationService.class);
     /**
      * Регистрация пользователя
      *

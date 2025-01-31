@@ -1,9 +1,11 @@
 package ru.netology.file_manager.service;
 
 
+import ch.qos.logback.classic.Logger;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.Resource;
@@ -21,6 +23,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class FileServiceImpl implements FileService {
+    public static final Logger logger = (Logger) LoggerFactory.getLogger(FileServiceImpl.class);
     @Autowired
     @Qualifier(value = "fileDAO")
     private final FileDAO fileDAO;
