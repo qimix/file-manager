@@ -7,13 +7,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-/*    @ExceptionHandler(UsernameNotFoundException.class)
-    public ResponseEntity<String> usernameNotFoundException(UsernameNotFoundException usernameNotFoundException) {
-        return ResponseEntity
-                .status(HttpStatus.UNAUTHORIZED) //401
-                .body("Bad credentials");
-    }*/
-
     @ExceptionHandler(UploadFileException.class)
     public ResponseEntity<String> uploadFileException(UploadFileException uploadFileException) {
         return ResponseEntity
@@ -27,8 +20,6 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST) // 400
                 .body("Bad credentials");
     }
-
-
 
 
 }

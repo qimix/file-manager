@@ -7,13 +7,16 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
-public class Http401UnauthorizedEntryPoint  implements AuthenticationEntryPoint {
+public class Http401UnauthorizedEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request,
                          HttpServletResponse response,
                          AuthenticationException exception)
             throws IOException {
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Access Denied");
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        PrintWriter writer = response.getWriter();
+        writer.println("Unauthorized error");
     }
 }
