@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.netology.file_manager.dto.JwtAuthenticationResponse;
 import ru.netology.file_manager.dto.SignInFrontendRequest;
-import ru.netology.file_manager.dto.SignInRequest;
 import ru.netology.file_manager.dto.SignUpRequest;
+import ru.netology.file_manager.exception.AuthenticationUserException;
 import ru.netology.file_manager.repository.TokenRepository;
 import ru.netology.file_manager.service.AuthenticationService;
 import ru.netology.file_manager.service.JwtService;
@@ -30,8 +30,12 @@ public class AuthController {
 
     @Operation(summary = "User authorization")
     @PostMapping("/login")
-    public JwtAuthenticationResponse login(@RequestBody @Valid SignInFrontendRequest frontendRequest) {
-        return authenticationService.login(frontendRequest);
+    public JwtAuthenticationResponse login(@RequestBody @Valid SignInFrontendRequest frontendRequest) throws AuthenticationUserException {
+        try {
+            return authenticationService.login(frontendRequest);
+        }catch (Exception e) {
+            throw new AuthenticationUserException(e);
+        }
     }
 
     @Operation(summary = "User logout")

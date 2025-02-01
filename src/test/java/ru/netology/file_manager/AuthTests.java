@@ -12,6 +12,7 @@ import ru.netology.file_manager.controller.AuthController;
 import ru.netology.file_manager.dto.JwtAuthenticationResponse;
 import ru.netology.file_manager.dto.SignInFrontendRequest;
 import ru.netology.file_manager.dto.SignUpRequest;
+import ru.netology.file_manager.exception.AuthenticationUserException;
 import ru.netology.file_manager.model.Token;
 import ru.netology.file_manager.repository.TokenRepository;
 
@@ -47,7 +48,7 @@ public class AuthTests {
 
     @Test
     @DisplayName("JUnit test for AuthController.login")
-    void testAuthControllerLogin() {
+    void testAuthControllerLogin() throws AuthenticationUserException {
         JwtAuthenticationResponse authenticationResponse = authController.login(frontendRequest);
         assertThat(authenticationResponse).isNotNull();
     }

@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import ru.netology.file_manager.exception.ExtractClaimsException;
 import ru.netology.file_manager.model.Token;
 import ru.netology.file_manager.model.User;
 import ru.netology.file_manager.repository.TokenRepository;
@@ -128,16 +127,7 @@ public class JwtService {
      * @return данные
      */
     private Claims extractAllClaims(String token) {
-        Claims claims;
-        logger.info("------------------- Start extractAllClaims -----------------------");
-        try {
-            claims = Jwts.parser().setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody();
-            logger.info("------------------- All claims extract -----------------------");
-        } catch (Exception e) {
-            logger.info("------------------- Error claims extract -----------------------");
-            claims = null;
-        }
-        return claims;
+        return Jwts.parser().setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody();
     }
 
     /**
