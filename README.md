@@ -14,3 +14,8 @@
 2. Загрузка файла на сервер: ```curl -X POST -H "multipart/form-data" -H "auth-token: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsImlkIjo5OTgsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwic3ViIjoiYWRtaW4iLCJpYXQiOjE3Mzg2MTAzMDEsImV4cCI6MTczODc1NDMwMX0.VpSa3VBS8ha4hgSnrg9gfqRdBH-KZXZnVHjiY9D18eE" -F file=@file.txt -L "http://localhost:8080/file?filename=file.txt"```
 3. Получение списка файлов: ```curl -X GET -H "auth-token: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsImlkIjo5OTgsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwic3ViIjoiYWRtaW4iLCJpYXQiOjE3Mzg2MTAzMDEsImV4cCI6MTczODc1NDMwMX0.VpSa3VBS8ha4hgSnrg9gfqRdBH-KZXZnVHjiY9D18eE" -L "http://localhost:8080/list?limit=3"```
 4. Удаление файла: ```curl -X DELETE -H "auth-token: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsImlkIjo5OTgsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwic3ViIjoiYWRtaW4iLCJpYXQiOjE3Mzg2MTAzMDEsImV4cCI6MTczODc1NDMwMX0.VpSa3VBS8ha4hgSnrg9gfqRdBH-KZXZnVHjiY9D18eE" -L "http://localhost:8080/file?filename=file.txt"```
+
+#### Запуск фронтенда:
+1. Склонировать репозиторий: ```git clone https://github.com/qimix/netology-diplom-frontend.git```
+2. Перейти в папку проекта и запустить сервис: ```cd netology-diplom-frontend```, ```npm install```, ```npm run serve```
+3. Тестовый логин\пароль ```\"login\":\"admin@gmail.com\", \"password\":\"admin1234\```
