@@ -10,9 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.netology.file_manager.dto.FileListResp;
-import ru.netology.file_manager.exception.DeleteFileException;
-import ru.netology.file_manager.exception.ErrorDeleteFileException;
-import ru.netology.file_manager.exception.UploadFileException;
+import ru.netology.file_manager.exception.*;
 import ru.netology.file_manager.model.FileInfo;
 import ru.netology.file_manager.service.FileService;
 
@@ -39,9 +37,12 @@ public class FileController {
 
     @CrossOrigin
     @GetMapping("/list")
-    public ResponseEntity<List<FileListResp>> filelist(@RequestParam("limit") Integer limit) {
+    public ResponseEntity<List<FileListResp>> filelist(@RequestParam("limit") Integer limit) throws ErrorGettingFileListException {
         List<FileInfo> fileInfoList = fileService.filelist().stream().limit(limit).toList();
         List<FileListResp> fileListResp = new ArrayList<>();
+        if (fileInfoList.isEmpty()) {
+            throw new ErrorGettingFileListException("Error getting file list");
+        }
         for (FileInfo fileInfo : fileInfoList) {
             fileListResp.add(new FileListResp().builder().setFilename(fileInfo.getName()).build());
         }
