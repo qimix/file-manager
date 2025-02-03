@@ -74,4 +74,8 @@ public class FileServiceImpl implements FileService {
         return DigestUtils.md5Hex(name + LocalDateTime.now().toString());
     }
 
+    public boolean checkFileExits(String filename) {
+        return fileDAO.checkFileExist(filename);
+    }
+
 }

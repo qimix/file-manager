@@ -26,6 +26,10 @@ public class FileDAO {
         fileInfoRepository.deleteById(id);
     }
 
+    public boolean checkFileExist(String filename) {
+        return fileInfoRepository.existsByName(filename);
+    }
+
     public FileInfo findByName(String filename) {
         return fileInfoRepository.findByName(filename).get(0);
     }

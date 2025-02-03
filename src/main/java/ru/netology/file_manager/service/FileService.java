@@ -18,4 +18,7 @@ public interface FileService {
     FileInfo findByName(String filename);
 
     Resource download(String keyFile) throws IOException;
+
+    boolean checkFileExits(String filename);
+
 }

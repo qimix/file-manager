@@ -11,4 +11,7 @@ import java.util.List;
 public interface FileInfoRepository extends JpaRepository<FileInfo,Long> {
     @Query(nativeQuery = true, value = "select * from fileinfo where name = :filename")
     List<FileInfo> findByName(String filename);
+
+    boolean existsByName(String filename);
+
 }

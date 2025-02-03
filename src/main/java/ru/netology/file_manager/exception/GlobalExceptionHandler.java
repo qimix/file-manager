@@ -21,5 +21,19 @@ public class GlobalExceptionHandler {
                 .body("Bad credentials");
     }
 
+    @ExceptionHandler(DeleteFileException.class)
+    public ResponseEntity<String> deleteFileException(DeleteFileException deleteFileException) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST) // 400
+                .body("Error input data");
+    }
+
+    @ExceptionHandler(ErrorDeleteFileException.class)
+    public ResponseEntity<String> errorDeleteFileException(ErrorDeleteFileException errorDeleteFileException) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR) // 500
+                .body("Error delete file");
+    }
+
 
 }
