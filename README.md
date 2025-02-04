@@ -18,4 +18,4 @@
 #### Запуск фронтенда:
 1. Склонировать репозиторий: ```git clone https://github.com/qimix/netology-diplom-frontend.git```
 2. Перейти в папку проекта и запустить сервис: ```cd netology-diplom-frontend```, ```npm install```, ```npm run serve```
-3. Тестовый логин\пароль ```\"login\":\"admin@gmail.com\", \"password\":\"admin1234\```
+3. Тестовый логин\пароль ```"login":"admin@gmail.com", "password":"admin1234```
