@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,10 +21,14 @@ import ru.netology.file_manager.repository.TokenRepository;
 import ru.netology.file_manager.service.AuthenticationService;
 import ru.netology.file_manager.service.JwtService;
 
+import static ru.netology.file_manager.utils.LogConstants.LOG_SEPARATOR;
+import static ru.netology.file_manager.utils.LogConstants.REQUEST_BODY;
+
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "Authorization")
 public class AuthController {
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
     private final TokenRepository tokenRepository;
     private final JwtService jwtService;
     private final AuthenticationService authenticationService;
@@ -31,9 +37,11 @@ public class AuthController {
     @Operation(summary = "User authorization")
     @PostMapping("/login")
     public JwtAuthenticationResponse login(@RequestBody @Valid SignInFrontendRequest frontendRequest) throws AuthenticationUserException {
+        logger.info(LOG_SEPARATOR);
         try {
+            logger.info(REQUEST_BODY, frontendRequest);
             return authenticationService.login(frontendRequest);
-        }catch (Exception e) {
+        } catch (Exception e) {
             throw new AuthenticationUserException(e);
         }
     }
