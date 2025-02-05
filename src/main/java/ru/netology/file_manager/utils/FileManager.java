@@ -19,41 +19,41 @@ public class FileManager {
     public static final Logger logger = (Logger) LoggerFactory.getLogger(FileManager.class);
 
     public void upload(byte[] resource, String keyName) throws IOException {
-        logger.info("------------------- start upload file -----------------------");
+        logger.info("Start upload file");
         Path path = Paths.get(DIRECTORY_PATH, keyName);
         Path file = Files.createFile(path);
         FileOutputStream stream = null;
         try {
             stream = new FileOutputStream(file.toString());
             stream.write(resource);
-            logger.info("------------------- finishing upload file -----------------------");
+            logger.info("Finishing upload file");
         } catch (IOException e) {
-            logger.error("------------------- error upload file -----------------------");
+            logger.error("Error upload file");
         } finally {
             stream.close();
         }
     }
 
     public void delete(String key) throws IOException {
-        logger.info("------------------- start delete file -----------------------");
+        logger.info("start delete file");
         try {
             Path path = Paths.get(DIRECTORY_PATH, key);
             Files.delete(path);
-            logger.info("------------------- finishing delete file -----------------------");
+            logger.info("Finishing delete file");
         } catch (IOException e) {
-            logger.error("------------------- error delete file -----------------------");
+            logger.error("Error delete file");
         }
     }
 
     public Resource download(String key) throws IOException {
-        logger.info("------------------- start download file -----------------------");
+        logger.info("Start download file");
         Path path = Paths.get(DIRECTORY_PATH, key);
         Resource resource = new UrlResource(path.toUri());
         if (resource.exists() || resource.isReadable()) {
-            logger.info("------------------- downloading file finish  -----------------------");
+            logger.info("Downloading file finish");
             return resource;
         } else {
-            logger.error("------------------- error download file -----------------------");
+            logger.error("Error download file");
             throw new IOException();
         }
     }

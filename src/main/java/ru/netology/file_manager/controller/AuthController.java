@@ -37,11 +37,17 @@ public class AuthController {
     @Operation(summary = "User authorization")
     @PostMapping("/login")
     public JwtAuthenticationResponse login(@RequestBody @Valid SignInFrontendRequest frontendRequest) throws AuthenticationUserException {
+        logger.info("Start login:");
+        logger.info(REQUEST_BODY, frontendRequest);
         logger.info(LOG_SEPARATOR);
         try {
-            logger.info(REQUEST_BODY, frontendRequest);
-            return authenticationService.login(frontendRequest);
+            JwtAuthenticationResponse jwtAuthenticationResponse = authenticationService.login(frontendRequest);
+            logger.info("Login successful");
+            return jwtAuthenticationResponse;
         } catch (Exception e) {
+            logger.error("Error login for:");
+            logger.error(REQUEST_BODY, frontendRequest, e.getMessage());
+            logger.info(LOG_SEPARATOR);
             throw new AuthenticationUserException(e);
         }
     }
@@ -49,13 +55,19 @@ public class AuthController {
     @Operation(summary = "User logout")
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest httpServletRequest) {
+        logger.info("Start delete token:");
+        logger.info(LOG_SEPARATOR);
         jwtService.dropToken(httpServletRequest.getHeader("auth-token"));
+        logger.info("Logout completed");
         return new ResponseEntity<String>("Logout user", HttpStatus.OK);
     }
 
     @Operation(summary = "User registration")
     @PostMapping("/sign-up")
     public JwtAuthenticationResponse signUp(@RequestBody @Valid SignUpRequest request) {
+        logger.info("Start signup:");
+        logger.info("Email {}: ", "Username {}: ", "Password {}: ", request.getEmail(), request.getUsername(), request.getPassword());
+        logger.info(LOG_SEPARATOR);
         return authenticationService.signUp(request);
     }
 
