@@ -16,6 +16,8 @@ import ru.netology.file_manager.model.Role;
 import ru.netology.file_manager.model.User;
 import ru.netology.file_manager.utils.FileManager;
 
+import static ru.netology.file_manager.utils.LogConstants.LOG_SEPARATOR;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -31,7 +33,7 @@ public class AuthenticationService {
      * @return токен
      */
     public JwtAuthenticationResponse signUp(SignUpRequest request) {
-
+        logger.info("Start user registration: {}", request);
         var user = User.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
@@ -42,35 +44,24 @@ public class AuthenticationService {
         userService.create(user);
 
         var jwt = jwtService.generateToken(user);
+        logger.info("User registration success {}", request);
         return new JwtAuthenticationResponse(jwt);
     }
-
     /**
      * Аутентификация пользователя
      *
      * @param request данные пользователя
      * @return токен
      */
-    public JwtAuthenticationResponse signIn(SignInRequest request) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                request.getUsername(),
-                request.getPassword()
-        ));
-
-        var user = userService
-                .userDetailsService()
-                .loadUserByUsername(request.getUsername());
-
-        var jwt = jwtService.generateToken(user);
-        return new JwtAuthenticationResponse(jwt);
-    }
-
     public JwtAuthenticationResponse login(SignInFrontendRequest frontendRequest) {
+        logger.info("Start user get token: {}", frontendRequest);
         var user = userService.getByEmail(frontendRequest.getEmail());
         if (passwordEncoder.matches(frontendRequest.getPassword(), user.getPassword())) {
             var jwt = jwtService.generateToken(user);
+            logger.info("User getting token is success: {}", jwt);
             return new JwtAuthenticationResponse(jwt);
         }
+        logger.error("Error getting token for user: {}", frontendRequest);
         throw new UsernameNotFoundException("Bad credentials");
     }
 

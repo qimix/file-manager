@@ -55,7 +55,7 @@ public class AuthController {
     @Operation(summary = "User logout")
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest httpServletRequest) {
-        logger.info("Start delete token:");
+        logger.info("Start logout:");
         logger.info(LOG_SEPARATOR);
         jwtService.dropToken(httpServletRequest.getHeader("auth-token"));
         logger.info("Logout completed");
@@ -65,8 +65,7 @@ public class AuthController {
     @Operation(summary = "User registration")
     @PostMapping("/sign-up")
     public JwtAuthenticationResponse signUp(@RequestBody @Valid SignUpRequest request) {
-        logger.info("Start signup:");
-        logger.info("Email {}: ", "Username {}: ", "Password {}: ", request.getEmail(), request.getUsername(), request.getPassword());
+        logger.info("Start user registration: ", request);
         logger.info(LOG_SEPARATOR);
         return authenticationService.signUp(request);
     }
