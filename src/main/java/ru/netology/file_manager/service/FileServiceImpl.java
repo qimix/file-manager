@@ -37,10 +37,10 @@ public class FileServiceImpl implements FileService {
     @Transactional(rollbackOn = {IOException.class})
     @Override
     public FileInfo upload(MultipartFile resource) throws IOException {
-        logger.info("Start upload file: {}", resource.getOriginalFilename());
+        logger.info("start upload file: {}", resource.getOriginalFilename());
         LocalDate uploadDate = LocalDate.now();
         String keyFile = generateKey(resource.getName());
-        logger.info("Set internal file name: {}", keyFile);
+        logger.info("set internal file name: {}", keyFile);
         FileInfo createdFile = FileInfo.builder()
                 .setName(resource.getOriginalFilename())
                 .setKeyFile(keyFile)
@@ -49,46 +49,46 @@ public class FileServiceImpl implements FileService {
                 .build();
         createdFile = fileDAO.create(createdFile);
         fileManager.upload(resource.getBytes(), keyFile);
-        logger.info("Success upload file: {}", resource.getOriginalFilename());
+        logger.info("success upload file: {}", resource.getOriginalFilename());
         return createdFile;
     }
 
     @Override
     public List<FileInfo> filelist() {
-        logger.info("Start get filelist");
+        logger.info("start get filelist");
         return fileDAO.filelist();
     }
 
     @Override
     public void delete(String filename) throws IOException {
-        logger.info("Start delete file");
+        logger.info("start delete file");
         FileInfo file = findByName(filename);
         fileDAO.delete(file.getId());
         fileManager.delete(file.getKeyFile());
-        logger.info("Deleted file success");
+        logger.info("seleted file success");
     }
 
     @Override
     public FileInfo findByName(String filename) {
-        logger.info("Starting find file by name");
+        logger.info("starting find file by name");
         return fileDAO.findByName(filename);
     }
 
     @Override
     public Resource download(String keyFile) throws IOException {
-        logger.info("Starting download file");
+        logger.info("starting download file");
         return fileManager.download(keyFile);
     }
 
     private String generateKey(String name) {
-        logger.info("Starting generate key");
+        logger.info("starting generate key");
         String key = DigestUtils.md5Hex(name + LocalDateTime.now().toString());
-        logger.info("Generated key: {}", key);
+        logger.info("generated key: {}", key);
         return key;
     }
 
     public boolean checkFileExits(String filename) {
-        logger.info("Starting check file exit");
+        logger.info("starting check file exit");
         return fileDAO.checkFileExist(filename);
     }
 
