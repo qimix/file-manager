@@ -1,6 +1,8 @@
 package ru.netology.file_manager.service;
 
+import ch.qos.logback.classic.Logger;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,6 +15,7 @@ import ru.netology.file_manager.model.User;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private static final Logger logger = (Logger) LoggerFactory.getLogger(JwtService.class);
 
     /**
      * Сохранение пользователя
@@ -20,6 +23,7 @@ public class UserService {
      * @return сохраненный пользователь
      */
     public User save(User user) {
+        logger.info("start save: {}", user.getUsername());
         return userRepository.save(user);
     }
 
@@ -29,14 +33,16 @@ public class UserService {
      * @return созданный пользователь
      */
     public User create(User user) {
+        logger.info("start create: {}", user.getUsername());
         if (userRepository.existsByUsername(user.getUsername())) {
+            logger.error("error user {} exists: ", user.getUsername());
             throw new RuntimeException("Пользователь с таким именем уже существует");
         }
 
         if (userRepository.existsByEmail(user.getEmail())) {
+            logger.error("error user {} exists: ", user.getUsername());
             throw new RuntimeException("Пользователь с таким email уже существует");
         }
-
         return save(user);
     }
 
@@ -46,6 +52,7 @@ public class UserService {
      * @return пользователь
      */
     public User getByUsername(String username) {
+        logger.info("start getByUsername: {} ", username);
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
     }
@@ -56,6 +63,7 @@ public class UserService {
      * @return пользователь
      */
     public User getByEmail(String email) {
+        logger.info("start getByEmail: {} ", email);
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
     }
@@ -68,6 +76,7 @@ public class UserService {
      * @return пользователь
      */
     public UserDetailsService userDetailsService() {
+        logger.info("start userDetailsService");
         return this::getByUsername;
     }
 
@@ -78,7 +87,9 @@ public class UserService {
      */
     public User getCurrentUser() {
         // Получение имени пользователя из контекста Spring Security
+        logger.info("start getCurrentUser");
         var username = SecurityContextHolder.getContext().getAuthentication().getName();
+        logger.info("get user: {}", username);
         return getByUsername(username);
     }
 
@@ -90,6 +101,7 @@ public class UserService {
      */
     @Deprecated
     public void getAdmin() {
+        logger.info("start getAdmin");
         var user = getCurrentUser();
         user.setRole(Role.ROLE_ADMIN);
         save(user);

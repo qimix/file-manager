@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static ru.netology.file_manager.utils.LogConstants.LOG_SEPARATOR;
-import static ru.netology.file_manager.utils.LogConstants.REQUEST_BODY;
 
 @RestController
 @AllArgsConstructor
@@ -30,15 +29,15 @@ public class FileController {
     @CrossOrigin
     @PostMapping("/file")
     public ResponseEntity<String> uploadFile(@RequestParam("filename") String filename, @RequestBody MultipartFile file) throws Exception {
-        logger.info("Start upload file: {}", filename);
+        logger.info("start upload file: {}", filename);
         logger.info(LOG_SEPARATOR);
         try {
             fileService.upload(file);
-            logger.info("File {} uploaded", filename);
+            logger.info("file {} uploaded", filename);
             logger.info(LOG_SEPARATOR);
-            return ResponseEntity.ok("Upload file to server");
+            return ResponseEntity.ok("upload file to server");
         } catch (Exception e) {
-            logger.error("Error upload file: {}", filename);
+            logger.error("error upload file: {}", filename);
             logger.info(LOG_SEPARATOR);
             throw new UploadFileException(e);
         }
@@ -49,35 +48,35 @@ public class FileController {
     public ResponseEntity<List<FileListResp>> listFile(@RequestParam("limit") Integer limit) throws ErrorGettingFileListException {
         List<FileInfo> fileInfoList = fileService.filelist().stream().limit(limit).toList();
         List<FileListResp> fileListResp = new ArrayList<>();
-        logger.info("Starting getting file list");
+        logger.info("starting getting file list");
         logger.info(LOG_SEPARATOR);
         if (fileInfoList.isEmpty()) {
-            logger.error("Error getting file list");
-            throw new ErrorGettingFileListException("Error getting file list");
+            logger.error("error getting file list");
+            throw new ErrorGettingFileListException("error getting file list");
         }
         for (FileInfo fileInfo : fileInfoList) {
             fileListResp.add(new FileListResp().builder().setFilename(fileInfo.getName()).build());
         }
-        logger.info("Getting file list successful");
+        logger.info("getting file list successful");
         return ResponseEntity.ok(fileListResp);
     }
 
     @CrossOrigin
     @DeleteMapping("/file")
     public ResponseEntity<String> deleteFile(@RequestParam("filename") String filename) throws IOException, DeleteFileException, ErrorDeleteFileException {
-        logger.info("Starting delete file");
+        logger.info("starting delete file");
         logger.info(LOG_SEPARATOR);
         if (filename.isEmpty()) {
-            logger.error("Error input data");
-            throw new DeleteFileException("Error input data");
+            logger.error("error input data");
+            throw new DeleteFileException("error input data");
         }
         if (fileService.checkFileExits(filename)) {
             fileService.delete(filename);
-            logger.info("Success deleted");
-            return ResponseEntity.ok("Success deleted");
+            logger.info("success deleted");
+            return ResponseEntity.ok("success deleted");
         } else {
-            logger.error("Error delete file");
-            throw new ErrorDeleteFileException("Error delete file");
+            logger.error("error delete file");
+            throw new ErrorDeleteFileException("error delete file");
         }
     }
 

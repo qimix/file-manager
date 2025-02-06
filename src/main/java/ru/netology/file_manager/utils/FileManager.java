@@ -16,19 +16,19 @@ import java.nio.file.Paths;
 @Component
 public class FileManager {
     private String DIRECTORY_PATH = ".";
-    public static final Logger logger = (Logger) LoggerFactory.getLogger(FileManager.class);
+    private static final Logger logger = (Logger) LoggerFactory.getLogger(FileManager.class);
 
     public void upload(byte[] resource, String keyName) throws IOException {
-        logger.info("Start upload file");
+        logger.info("start upload file");
         Path path = Paths.get(DIRECTORY_PATH, keyName);
         Path file = Files.createFile(path);
         FileOutputStream stream = null;
         try {
             stream = new FileOutputStream(file.toString());
             stream.write(resource);
-            logger.info("Finishing upload file");
+            logger.info("finishing upload file");
         } catch (IOException e) {
-            logger.error("Error upload file");
+            logger.error("error upload file");
         } finally {
             stream.close();
         }
@@ -39,21 +39,21 @@ public class FileManager {
         try {
             Path path = Paths.get(DIRECTORY_PATH, key);
             Files.delete(path);
-            logger.info("Finishing delete file");
+            logger.info("finishing delete file");
         } catch (IOException e) {
-            logger.error("Error delete file");
+            logger.error("error delete file");
         }
     }
 
     public Resource download(String key) throws IOException {
-        logger.info("Start download file");
+        logger.info("start download file");
         Path path = Paths.get(DIRECTORY_PATH, key);
         Resource resource = new UrlResource(path.toUri());
         if (resource.exists() || resource.isReadable()) {
-            logger.info("Downloading file finish");
+            logger.info("downloading file finish");
             return resource;
         } else {
-            logger.error("Error download file");
+            logger.error("error download file");
             throw new IOException();
         }
     }

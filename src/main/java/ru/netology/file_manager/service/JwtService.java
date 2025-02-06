@@ -22,12 +22,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import static ru.netology.file_manager.utils.LogConstants.LOG_SEPARATOR;
-
 @Service
 @RequiredArgsConstructor
 public class JwtService {
-    public static final Logger logger = (Logger) LoggerFactory.getLogger(JwtService.class);
+    private static final Logger logger = (Logger) LoggerFactory.getLogger(JwtService.class);
     @Value("${token.signing.key}")
     private String jwtSigningKey;
 
@@ -52,7 +50,7 @@ public class JwtService {
      * @return токен
      */
     public String generateToken(UserDetails userDetails) {
-        logger.info("Start generate token");
+        logger.info("start generateToken");
         Map<String, Object> claims = new HashMap<>();
         if (userDetails instanceof User customUserDetails) {
             claims.put("id", customUserDetails.getId());
@@ -72,7 +70,7 @@ public class JwtService {
      * @return true, если токен валиден
      */
     public boolean isTokenValid(String token, UserDetails userDetails) {
-        logger.info("Start validete token");
+        logger.info("start isTokenValid");
         final String userName = extractUserName(token);
         Token tokenPresent = tokenRepository.findByToken(token);
         boolean status = (userName.equals(userDetails.getUsername())) && !isTokenExpired(token) && !tokenPresent.getToken().isEmpty();
@@ -89,9 +87,8 @@ public class JwtService {
      * @return данные
      */
     private <T> T extractClaim(String token, Function<Claims, T> claimsResolvers) {
-        logger.info("Start extract claim");
+        logger.info("Start extractClaim");
         final Claims claims = extractAllClaims(token);
-        logger.info("Claims extracted");
         return claimsResolvers.apply(claims);
     }
 
@@ -103,13 +100,11 @@ public class JwtService {
      * @return токен
      */
     private String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        logger.info("Start generate token");
         String token = Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 100000 * 60 * 24))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
         tokenRepository.save(Token.builder().setToken(token).build());
-        logger.info("Token generated {}", token);
         return token;
     }
 
@@ -120,6 +115,7 @@ public class JwtService {
      * @return true, если токен просрочен
      */
     private boolean isTokenExpired(String token) {
+        logger.info("start isTokenExpired");
         return extractExpiration(token).before(new Date());
     }
 
@@ -130,6 +126,7 @@ public class JwtService {
      * @return дата истечения
      */
     private Date extractExpiration(String token) {
+        logger.info("start extractExpiration");
         return extractClaim(token, Claims::getExpiration);
     }
 
@@ -140,6 +137,7 @@ public class JwtService {
      * @return данные
      */
     private Claims extractAllClaims(String token) {
+        logger.info("start extractAllClaims");
         return Jwts.parser().setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody();
     }
 
@@ -149,11 +147,13 @@ public class JwtService {
      * @return ключ
      */
     private Key getSigningKey() {
+        logger.info("start getSigningKey");
         byte[] keyBytes = Decoders.BASE64.decode(jwtSigningKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
     public void dropToken(String token) {
+        logger.info("start dropToken");
         Token stordToken = tokenRepository.findByToken(token);
         tokenRepository.delete(stordToken);
     }

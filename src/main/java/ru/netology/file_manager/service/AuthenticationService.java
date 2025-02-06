@@ -4,19 +4,14 @@ import ch.qos.logback.classic.Logger;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.netology.file_manager.dto.JwtAuthenticationResponse;
 import ru.netology.file_manager.dto.SignInFrontendRequest;
-import ru.netology.file_manager.dto.SignInRequest;
 import ru.netology.file_manager.dto.SignUpRequest;
 import ru.netology.file_manager.model.Role;
 import ru.netology.file_manager.model.User;
-import ru.netology.file_manager.utils.FileManager;
-
-import static ru.netology.file_manager.utils.LogConstants.LOG_SEPARATOR;
 
 @Service
 @RequiredArgsConstructor
