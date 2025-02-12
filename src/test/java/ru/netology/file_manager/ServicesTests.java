@@ -1,6 +1,5 @@
 package ru.netology.file_manager;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.multipart.MultipartFile;
-import ru.netology.file_manager.dao.FileDAO;
 import ru.netology.file_manager.service.FileServiceImpl;
 import ru.netology.file_manager.utils.FileManager;
 
@@ -50,11 +48,10 @@ public class ServicesTests {
     @DisplayName("JUnit test for FileService.upload")
     public void FileServiceUploadTest() throws IOException {
         fileService.upload(multipartFile);
-
-        Path checkFile = Paths.get("src/test/resources/testFileStorage/").getFileSystem();
-        System.out.println(checkFile.toString());
-        assertThat(Files.exists(checkFile)).isTrue();
-        Files.delete(checkFile);
+        File file = new File("src/test/resources/testFileStorage/");
+        File[] files = file.listFiles();
+        assertThat(files.length > 0).isTrue();
+        file.delete();
     }
 
 }
