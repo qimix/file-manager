@@ -10,6 +10,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.testcontainers.shaded.org.apache.commons.io.FileUtils;
+import ru.netology.file_manager.model.FileInfo;
 import ru.netology.file_manager.service.FileServiceImpl;
 import ru.netology.file_manager.utils.FileManager;
 
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -47,12 +49,19 @@ public class ServicesTests {
 
     @Test
     @DisplayName("JUnit test for FileService.upload")
-    public void FileServiceUploadTest() throws IOException {
+    public void uploadTest() throws IOException {
         fileService.upload(multipartFile);
         File file = new File("src/test/resources/testFileStorage/");
         File[] files = file.listFiles();
         assertThat(files.length > 0).isTrue();
         FileUtils.deleteDirectory(new File("src/test/resources/testFileStorage/"));
+    }
+
+    @Test
+    @DisplayName("JUnit test for FileService.filelist")
+    public void filelistTest() {
+        List<FileInfo> fileList = fileService.filelist();
+        assertThat(fileList.size() > 0).isTrue();
     }
 
 }
