@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.testcontainers.shaded.org.apache.commons.io.FileUtils;
 import ru.netology.file_manager.service.FileServiceImpl;
 import ru.netology.file_manager.utils.FileManager;
 
@@ -51,7 +52,7 @@ public class ServicesTests {
         File file = new File("src/test/resources/testFileStorage/");
         File[] files = file.listFiles();
         assertThat(files.length > 0).isTrue();
-        file.delete();
+        FileUtils.deleteDirectory(new File("src/test/resources/testFileStorage/"));
     }
 
 }
