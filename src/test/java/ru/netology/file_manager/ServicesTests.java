@@ -17,15 +17,13 @@ import ru.netology.file_manager.utils.FileManager;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 public class ServicesTests {
+    String fileName = "mockFile.txt";
     private MultipartFile multipartFile;
     @Autowired
     @Qualifier(value = "fileServiceImpl")
@@ -34,7 +32,7 @@ public class ServicesTests {
 
     @BeforeEach
     public void initData() throws IOException {
-        multipartFile = new MockMultipartFile("mockFile", "mockFile.txt", "txt",
+        multipartFile = new MockMultipartFile("mockFile", fileName, "txt",
                 new FileInputStream("src/test/resources/mockFile.txt"));
         fileManager = new FileManager();
         ReflectionTestUtils.setField(fileManager, "DIRECTORY_PATH", "src/test/resources/testFileStorage/");
@@ -54,7 +52,7 @@ public class ServicesTests {
         File file = new File("src/test/resources/testFileStorage/");
         File[] files = file.listFiles();
         assertThat(files.length > 0).isTrue();
-        FileUtils.deleteDirectory(new File("src/test/resources/testFileStorage/"));
+        //FileUtils.deleteDirectory(new File("src/test/resources/testFileStorage/"));
     }
 
     @Test
@@ -62,6 +60,13 @@ public class ServicesTests {
     public void filelistTest() {
         List<FileInfo> fileList = fileService.filelist();
         assertThat(fileList.size() > 0).isTrue();
+    }
+
+    @Test
+    @DisplayName("JUnit test for FileService.delete")
+    public void deleteTest() throws IOException {
+        fileService.delete(fileName);
+        assertThat(FileUtils.isEmptyDirectory(new File("src/test/resources/testFileStorage/"))).isTrue();
     }
 
 }
