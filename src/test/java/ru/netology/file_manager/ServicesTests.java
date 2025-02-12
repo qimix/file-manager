@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.Resource;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -52,7 +53,6 @@ public class ServicesTests {
         File file = new File("src/test/resources/testFileStorage/");
         File[] files = file.listFiles();
         assertThat(files.length > 0).isTrue();
-        //FileUtils.deleteDirectory(new File("src/test/resources/testFileStorage/"));
     }
 
     @Test
@@ -63,10 +63,18 @@ public class ServicesTests {
     }
 
     @Test
+    @DisplayName("JUnit test for FileService.download")
+    public void downloadTest() throws IOException {
+        Resource resource = fileService.download(fileService.findByName(fileName).getKeyFile());
+        assertThat(resource.isFile()).isTrue();
+    }
+
+    @Test
     @DisplayName("JUnit test for FileService.delete")
     public void deleteTest() throws IOException {
         fileService.delete(fileName);
         assertThat(FileUtils.isEmptyDirectory(new File("src/test/resources/testFileStorage/"))).isTrue();
+        FileUtils.deleteDirectory(new File("src/test/resources/testFileStorage/"));
     }
 
 }
